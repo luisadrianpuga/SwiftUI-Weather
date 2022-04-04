@@ -12,8 +12,19 @@ struct ContentView: View {
         //This code is incharge of producing a background color for the app
         ZStack {
             //This code will take in as many colors as we want
-            LinearGradient(gradient: Gradient(colors: [.blue, .white]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: Gradient(colors: [.blue, .white]),
+                           startPoint: .topLeading,
+                           endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
+            VStack {
+                //This line of code adds the city name and its styling
+                Text("Columbia, Maryland")
+                    .font(.system(size: 32, weight: .medium, design: .default))
+                    .foregroundColor(.white)
+                    .padding()
+                //This line of code fills up the screen vertically as to push the other stuff up
+                Spacer()
+            }
         }
     }
 }
