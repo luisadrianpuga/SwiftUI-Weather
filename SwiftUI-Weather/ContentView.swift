@@ -12,35 +12,12 @@ struct ContentView: View {
         //This code is incharge of producing a background color for the app
         ZStack {
             //This code will take in as many colors as we want
-            LinearGradient(gradient: Gradient(colors: [.blue, Color("Color")]),//This color is in assets
-                           startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(.all)
+            BackgroundView(topColor:.blue, bottomColor: Color("Color"))
             VStack {
                 //This line of code adds the city name and its styling
-                Text("Columbia, Maryland")
-                    //These three lines of code takes care of the styling of the city title
-                    .font(.system(size: 32, weight: .medium, design: .default))
-                    .foregroundColor(.white)
-                    .padding()
+                CityTextView(cityName: "Columbia, Maryland")
                 //This VStack handles the sun icon and the temperature , the spacing in this determines how close these two components get
-                VStack(spacing: 8){
-                    //This line will change the main weather icon
-                    Image(systemName: "cloud.sun.fill")
-                        .renderingMode(.original)
-                        //This allows the icon to be resized properly
-                        .resizable()
-                        //This line of code fixes the aspect ratio of the icon as to prevent it from looking stretched
-                        .aspectRatio(contentMode: .fit)
-                        //This line of code produces the sizing of the icon
-                        .frame(width: 180, height: 180)
-                    //This line of code is the temperature
-                    Text("76°")
-                        //These two lines handle the stlying to the code
-                        .font(.system(size: 70, weight: .medium, design: .default))
-                        .foregroundColor(.white)
-                }
-                //This aligns the weathers
-                .padding(.bottom, 40)
+                MainWeatherStatusView(imageName: "cloud.sun.fill", temperature: 76)
                 //This VStack handles the sun icon and the temperature , the spacing in this determines how close these two components get
                 HStack(spacing: 20){
                     //Days of the week
@@ -55,23 +32,7 @@ struct ContentView: View {
                 Spacer()
                 
                 //This button does not do much
-                Button {
-                    //This is our button functionality
-                    print("tapped")
-                //This is where the button text is added
-                } label: {
-                //Text for the button
-                Text("Change Day Time")
-                        //How big
-                        .frame(width: 280, height: 50)
-                        //BG Color
-                        .background(Color.white)
-                        //Font Styling
-                        .font(.system(size: 20, weight: .bold, design: .default))
-                        //Corner radius
-                        .cornerRadius(16.0)
-                    
-                }
+                ButtonView(title: "Change Day Time", textColor: .blue, backgroundColor: .white)
                 //This line of code fills up the screen vertically as to push the other stuff up
                 Spacer()
             }
@@ -113,6 +74,83 @@ struct WeatherDayView: View {
             //These two lines handle the stlying to the code
                 .font(.system(size: 28, weight: .medium, design: .default))
                 .foregroundColor(.white)
+        }
+    }
+}
+
+//This code will take in as many colors as we want
+struct BackgroundView: View {
+    var topColor: Color
+    var bottomColor: Color
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [topColor, bottomColor]),//This color is in assets
+                       startPoint: .topLeading, endPoint: .bottomTrailing)
+        .edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct CityTextView: View {
+    //Holds the city name
+    var cityName: String
+    
+    var body: some View {
+        Text(cityName)
+        //These three lines of code takes care of the styling of the city title
+            .font(.system(size: 32, weight: .medium, design: .default))
+            .foregroundColor(.white)
+            .padding()
+    }
+}
+
+struct MainWeatherStatusView: View {
+    var imageName: String
+    var temperature: Int
+    var body: some View {
+        VStack(spacing: 8){
+            //This line will change the main weather icon
+            Image(systemName: "cloud.sun.fill")
+                .renderingMode(.original)
+            //This allows the icon to be resized properly
+                .resizable()
+            //This line of code fixes the aspect ratio of the icon as to prevent it from looking stretched
+                .aspectRatio(contentMode: .fit)
+            //This line of code produces the sizing of the icon
+                .frame(width: 180, height: 180)
+            //This line of code is the temperature
+            Text("\(temperature)°")
+            //These two lines handle the stlying to the code
+                .font(.system(size: 70, weight: .medium, design: .default))
+                .foregroundColor(.white)
+        }
+        //This aligns the weathers
+        .padding(.bottom, 40)
+    }
+}
+
+struct ButtonView: View {
+    var title: String
+    var textColor: Color
+    var backgroundColor: Color
+    
+    var body: some View {
+        Button {
+            //This is our button functionality
+            print("tapped")
+            //This is where the button text is added
+        } label: {
+            //Text for the button
+            Text(title)
+            //How big
+                .frame(width: 280, height: 50)
+            //BG Color
+                .background(backgroundColor)
+            //Text Color
+                .foregroundColor(textColor)
+            //Font Styling
+                .font(.system(size: 20, weight: .bold, design: .default))
+            //Corner radius
+                .cornerRadius(16.0)
+            
         }
     }
 }
